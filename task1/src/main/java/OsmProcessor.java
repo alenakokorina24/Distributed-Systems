@@ -27,6 +27,7 @@ public class OsmProcessor {
     public void processData(InputStream inputStream) throws XMLStreamException {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         XMLEventReader reader = xmlInputFactory.createXMLEventReader(inputStream);
+        logger.info("Data processing started...");
         while (reader.hasNext()) {
             XMLEvent nextEvent = reader.nextEvent();
             if (nextEvent.isStartElement()) {
@@ -39,6 +40,7 @@ public class OsmProcessor {
                 }
             }
         }
+        logger.info("Data processing successfully finished.");
         reader.close();
     }
 

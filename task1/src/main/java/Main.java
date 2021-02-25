@@ -7,12 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
-    private static final String STATISTIC_FORMAT = "%s : %d%n";
 
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -26,8 +26,8 @@ public class Main {
             try {
                 OsmProcessor osmProcessor = new OsmProcessor();
                 osmProcessor.processData(inputStream);
-                printStatistic(osmProcessor.getUsersEdits());
-                printStatistic(osmProcessor.getKeysTags());
+                printInfo(osmProcessor.getUsersEdits(), "USER - EDITS NUMBER");
+                printInfo(osmProcessor.getKeysTags(), "KEYS - TAGS WITH THE KEY");
             } catch (XMLStreamException e) {
                 logger.error("Error while processing file.", e);
             }
@@ -38,9 +38,17 @@ public class Main {
         }
     }
 
-    private static void printStatistic(Map<String, Integer> statistic) {
-        statistic.entrySet().stream()
-                .sorted((e1, e2) -> e2.getValue() - e1.getValue())
-                .forEach(e -> System.out.printf(STATISTIC_FORMAT, e.getKey(), e.getValue()));
+    private static void printInfo(Map<String, Integer> info, String title) {
+        HashMap<String, Integer> sorted = new HashMap<>();
+
+        info.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
+
+        System.out.println(title);
+        sorted.forEach((k, v) -> {
+            System.out.println(k + " - " + v);
+        });
     }
 }
