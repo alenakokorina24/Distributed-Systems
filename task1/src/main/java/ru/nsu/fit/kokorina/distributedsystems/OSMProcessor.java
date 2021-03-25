@@ -1,5 +1,7 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package ru.nsu.fit.kokorina.distributedsystems;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -11,13 +13,12 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
 import java.util.HashMap;
 
-public class OsmProcessor {
+public class OSMProcessor {
 
-    private static final Logger logger = LogManager.getLogger(OsmProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(OSMProcessor.class);
 
-    private final QName ID = new QName("id");
     private final QName USER = new QName("user");
-    private final QName KEY = new QName("key");
+    private final QName KEY = new QName("k");
     private final String TAG = "tag";
     private final String NODE = "node";
 
@@ -32,10 +33,14 @@ public class OsmProcessor {
             XMLEvent nextEvent = reader.nextEvent();
             if (nextEvent.isStartElement()) {
                 StartElement startElement = nextEvent.asStartElement();
-                if (startElement.getName().getLocalPart().equals("node")) {
+                if (startElement.getName().getLocalPart().equals(NODE)) {
                     Attribute userAttribute = startElement.getAttributeByName(USER);
                     String user = userAttribute.getValue();
-                    usersEdits.put(user, usersEdits.get(user) + 1);
+                    if (usersEdits.containsKey(user)) {
+                        usersEdits.put(user, usersEdits.get(user) + 1);
+                    } else {
+                        usersEdits.put(user, 1);
+                    }
                     countTagsPerKey(reader);
                 }
             }
@@ -48,15 +53,19 @@ public class OsmProcessor {
         while (reader.hasNext()) {
             XMLEvent nextEvent = reader.nextEvent();
             if (nextEvent.isEndElement() &&
-                    nextEvent.asEndElement().getName().getLocalPart().equals("node")) {
+                    nextEvent.asEndElement().getName().getLocalPart().equals(NODE)) {
                 return;
             }
             if (nextEvent.isStartElement()) {
                 StartElement startElement = nextEvent.asStartElement();
-                if (startElement.getName().getLocalPart().equals("tag")) {
+                if (startElement.getName().getLocalPart().equals(TAG)) {
                     Attribute keyAttribute = startElement.getAttributeByName(KEY);
                     String key = keyAttribute.getValue();
-                    keysTags.put(key, keysTags.get(key) + 1);
+                    if (keysTags.containsKey(key)) {
+                        keysTags.put(key, keysTags.get(key) + 1);
+                    } else {
+                        keysTags.put(key, 1);
+                    }
                 }
             }
         }

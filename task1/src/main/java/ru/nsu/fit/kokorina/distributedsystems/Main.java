@@ -1,6 +1,8 @@
+package ru.nsu.fit.kokorina.distributedsystems;
+
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileInputStream;
@@ -12,7 +14,7 @@ import java.util.Map;
 
 public class Main {
 
-    private static final Logger logger = LogManager.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -24,7 +26,7 @@ public class Main {
         try (InputStream inputStream = new BZip2CompressorInputStream(new FileInputStream(inputFilename))) {
             logger.info("File successfully decompressed.");
             try {
-                OsmProcessor osmProcessor = new OsmProcessor();
+                OSMProcessor osmProcessor = new OSMProcessor();
                 osmProcessor.processData(inputStream);
                 printInfo(osmProcessor.getUsersEdits(), "USER - EDITS NUMBER");
                 printInfo(osmProcessor.getKeysTags(), "KEYS - TAGS WITH THE KEY");
