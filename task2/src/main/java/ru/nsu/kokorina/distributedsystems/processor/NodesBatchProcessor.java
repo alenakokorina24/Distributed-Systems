@@ -1,9 +1,9 @@
-package processor;
+package ru.nsu.kokorina.distributedsystems.processor;
 
-import dao.NodeDAO;
-import dao.TagDAO;
-import model.Node;
-import model.Tag;
+import ru.nsu.kokorina.distributedsystems.dao.NodeDAO;
+import ru.nsu.kokorina.distributedsystems.dao.TagDAO;
+import ru.nsu.kokorina.distributedsystems.generated.Node;
+import ru.nsu.kokorina.distributedsystems.model.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +30,8 @@ public class NodesBatchProcessor implements INodeProcessor {
     @Override
     public void insertNode(Node node) {
         nodes.add(node);
-        node.getTags().forEach(tag -> {
-            tags.add(new Tag(node.getId(), tag.getKey(), tag.getValue()));
+        node.getTag().forEach(tag -> {
+            tags.add(new Tag(node.getId(), tag.getK(), tag.getV()));
         });
 
         if (nodes.size() + tags.size() > THRESH) {

@@ -1,6 +1,8 @@
-import dao.NodeDAO;
-import dao.TagDAO;
-import database.DatabaseConnection;
+package ru.nsu.kokorina.distributedsystems;
+
+import ru.nsu.kokorina.distributedsystems.dao.NodeDAO;
+import ru.nsu.kokorina.distributedsystems.dao.TagDAO;
+import ru.nsu.kokorina.distributedsystems.database.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import processor.INodeProcessor;
-import processor.NodeProcessor;
-import processor.NodesBatchProcessor;
-import processor.PreparedNodeProcessor;
+import ru.nsu.kokorina.distributedsystems.processor.INodeProcessor;
+import ru.nsu.kokorina.distributedsystems.processor.NodeProcessor;
+import ru.nsu.kokorina.distributedsystems.processor.NodesBatchProcessor;
+import ru.nsu.kokorina.distributedsystems.processor.PreparedNodeProcessor;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);

@@ -1,7 +1,7 @@
-package dao;
+package ru.nsu.kokorina.distributedsystems.dao;
 
-import database.DatabaseConnection;
-import model.Node;
+import ru.nsu.kokorina.distributedsystems.database.DatabaseConnection;
+import ru.nsu.kokorina.distributedsystems.generated.Node;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.List;
 
 public class NodeDAO implements INodeDAO {
-    private String SQL_INSERT = "INSERT INTO nodes(id, user, lon, lat " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private String SQL_INSERT = "INSERT INTO nodes(id, username, lon, lat) " +
+            "VALUES (?, ?, ?, ?)";
 
     @Override
     public void insertNode(Node node) throws SQLException {
@@ -21,7 +21,7 @@ public class NodeDAO implements INodeDAO {
         String user = node.getUser();
         double lat = node.getLat();
         double lon = node.getLon();
-        String sqlInsert = "INSERT INTO nodes(id, user, lon, lat) " +
+        String sqlInsert = "INSERT INTO nodes(id, username, lon, lat) " +
                 "VALUES (" + id + ", " + user + ", " + lon + ", " + lat + ");";
         statement.execute(sqlInsert);
     }

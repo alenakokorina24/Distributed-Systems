@@ -1,7 +1,9 @@
-import model.Node;
+package ru.nsu.kokorina.distributedsystems;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import processor.INodeProcessor;
+import ru.nsu.kokorina.distributedsystems.generated.Node;
+import ru.nsu.kokorina.distributedsystems.processor.INodeProcessor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -38,7 +40,7 @@ public class OSMProcessor {
 
                         long start = System.currentTimeMillis();
                         nNodes++;
-                        nTags += node.getTags().size();
+                        nTags += node.getTag().size();
                         nodeProcessor.insertNode(node);
                         long end = System.currentTimeMillis();
 
@@ -59,8 +61,6 @@ public class OSMProcessor {
             }
         }
         logger.info("OSM processing with " + nodeProcessor.getClass() + " finished.");
-        logger.info("Total: {} nodes, {} tags", nNodes, nTags);
-        logger.info("Total time: {} seconds", (totalTime) / 1000 );
         logger.info("Speed: {}", (nNodes + nTags) / totalTime * 1000);
     }
 }

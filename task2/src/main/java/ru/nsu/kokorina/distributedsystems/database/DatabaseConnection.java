@@ -1,4 +1,4 @@
-package database;
+package ru.nsu.kokorina.distributedsystems.database;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,8 +21,8 @@ public class DatabaseConnection {
         File file = new File(Objects.requireNonNull(classLoader.
                 getResource("initDatabase.sql")).getFile());
         try(BufferedReader reader = new BufferedReader(new FileReader(file))){
-            StringBuffer stringBuffer = new StringBuffer("");
-            while (reader.ready()){
+            StringBuffer stringBuffer = new StringBuffer();
+            while (reader.ready()) {
                 stringBuffer.append(reader.readLine());
             }
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PWD);

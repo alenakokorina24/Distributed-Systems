@@ -1,6 +1,6 @@
-package dao;
+package ru.nsu.kokorina.distributedsystems.dao;
 
-import model.Node;
+import ru.nsu.kokorina.distributedsystems.generated.Node;
 
 import java.sql.SQLException;
 import java.util.List;
