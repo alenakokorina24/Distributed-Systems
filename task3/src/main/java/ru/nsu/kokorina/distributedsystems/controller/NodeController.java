@@ -101,18 +101,4 @@ public class NodeController {
             e.printStackTrace();
         }
     }
-
-    private NodeEntity dtoToEntity(NodeDTO nodeDTO) {
-        List<Tag> tags = nodeDTO.getTags().entrySet().stream()
-                .map(t -> Tag.builder()
-                        .key(t.getKey())
-                        .value(t.getValue())
-                        .build()).collect(Collectors.toList());
-        return NodeEntity.builder()
-                .username(nodeDTO.getUsername())
-                .lon(nodeDTO.getLon())
-                .lat(nodeDTO.getLat())
-                .tags(tags)
-                .build();
-    }
 }
